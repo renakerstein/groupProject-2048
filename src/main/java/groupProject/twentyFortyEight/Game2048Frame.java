@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 
 public class Game2048Frame extends JFrame {
 
+	private final GridPanel gridPanel;
+	private final OptionsPanel optionsPanel;
+
 	public Game2048Frame() {
 
 		setTitle("2048");
@@ -15,6 +18,12 @@ public class Game2048Frame extends JFrame {
 		setResizable(false);
 
 		setLayout(new BorderLayout());
+
+		gridPanel = new GridPanel();
+		optionsPanel = new OptionsPanel(gridPanel);
+
+		add(gridPanel, BorderLayout.CENTER);
+		add(optionsPanel, BorderLayout.NORTH);
 
 	}
 }
