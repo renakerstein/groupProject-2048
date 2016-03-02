@@ -5,6 +5,7 @@ import java.awt.Color;
 public class Tile {
 
 	private int value;
+	private Position position;
 
 	public Tile() {
 		this(0);
@@ -12,6 +13,7 @@ public class Tile {
 
 	public Tile(int num) {
 		value = num;
+		//this.position=new Position()
 	}
 
 	public boolean isEmpty() {
@@ -49,4 +51,18 @@ public class Tile {
 		}
 		return new Color(0xcdc1b4);
 	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+	
+	
 }
