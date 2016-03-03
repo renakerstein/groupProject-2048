@@ -13,10 +13,12 @@ public class GridPanel extends JPanel {
 
 	private final JLabel[][] labels;
 	private final Tile[][] tiles;
+	private GameLogic logic;
 
 	public GridPanel() {
 
 		setLayout(new GridLayout(4, 4));
+		logic=new GameLogic();
 		labels = new JLabel[4][4];
 		tiles = new Tile[4][4];
 		for (int i = 0; i < labels.length; i++) {
@@ -68,6 +70,7 @@ public class GridPanel extends JPanel {
 	}
 
 	private void moveLeft() {
+	
 	}
 
 	public void newGame() {
