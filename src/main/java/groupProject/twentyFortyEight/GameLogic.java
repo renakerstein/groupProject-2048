@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 public class GameLogic {
 
-	private Tile[][] gameTiles;
+	private final Tile[][] gameTiles;
 	private ArrayList<Tile> availableSlots;
 	private Tile chosenSlot;
 	private int currentVal, comparisonVal;
@@ -26,8 +26,7 @@ public class GameLogic {
 	public Tile addTile() {
 		availableSlots = emptySlots();
 		if (!availableSlots.isEmpty()) {
-			int index = (int) (Math.random() * availableSlots.size())
-					% availableSlots.size();
+			int index = (int) (Math.random() * availableSlots.size()) % availableSlots.size();
 			chosenSlot = availableSlots.get(index);
 			chosenSlot.setValue(Math.random() < 0.9 ? 2 : 4);
 		}
@@ -141,7 +140,7 @@ public class GameLogic {
 			while (list.size() != 4) {
 				list.addFirst(new Tile());
 			}
-			for (int i = 0; i < list.size() - 1; i++) {
+			for (int i = 0; i < (list.size() - 1); i++) {
 				gameTiles[i][row] = list.get(i);
 			}
 		}
@@ -149,7 +148,7 @@ public class GameLogic {
 
 	public void moveUp() {
 		for (int row = 0; row < gameTiles.length; row++) {
-			for (int col = 0; col < gameTiles[col].length - 1; col++) {
+			for (int col = 0; col < (gameTiles[col].length - 1); col++) {
 				if (!gameTiles[row][col].isEmpty()) {
 					current = gameTiles[row][col];
 					currentVal = current.getValue();
@@ -163,10 +162,10 @@ public class GameLogic {
 
 	public ArrayList<Tile> emptySlots() {
 		ArrayList<Tile> empty = new ArrayList<Tile>();
-		for (int row = 0; row < gameTiles.length; row++) {
-			for (int column = 0; column < gameTiles[row].length; column++) {
-				if (gameTiles[row][column].isEmpty()) {
-					empty.add(gameTiles[row][column]);
+		for (Tile[] gameTile : gameTiles) {
+			for (Tile element : gameTile) {
+				if (element.isEmpty()) {
+					empty.add(element);
 
 				}
 			}
@@ -185,9 +184,9 @@ public class GameLogic {
 
 	public void print() {
 		// StringBuilder builder= new StringBuilder();
-		for (int row = 0; row < gameTiles.length; row++) {
-			for (int column = 0; column < gameTiles[row].length; column++) {
-				System.out.print(gameTiles[row][column].getValue() + " ");
+		for (Tile[] gameTile : gameTiles) {
+			for (Tile element : gameTile) {
+				System.out.print(element.getValue() + " ");
 			}
 			System.out.println();
 		}
@@ -214,5 +213,9 @@ public class GameLogic {
 		logic.moveDown();
 		logic.print();
 
+	}
+
+	public Tile[][] getTiles() {
+		return gameTiles;
 	}
 }
