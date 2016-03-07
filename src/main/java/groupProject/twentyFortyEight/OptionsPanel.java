@@ -12,14 +12,18 @@ import javax.swing.JPanel;
 public class OptionsPanel extends JPanel {
 
 	private final JLabel gameTitle;
-	private final JLabel highScore;
+	private final JLabel bestScore;
 	private final JLabel score;
 	private final JLabel newGame;
 
-	public OptionsPanel(final GridPanel gridPanel) {
+	public OptionsPanel(final GridPanel gridPanel, JLabel score,
+			JLabel bestScore) {
 
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		setBackground(Color.WHITE.brighter());
+
+		this.score = score;
+		this.bestScore = bestScore;
 
 		gameTitle = new JLabel("2048");
 		gameTitle.setFont(new Font("Calibri", Font.BOLD, 110));
@@ -53,11 +57,12 @@ public class OptionsPanel extends JPanel {
 
 		score = new JLabel("SCORE");
 		score.setFont(new Font("Calibri", Font.PLAIN, 20));
-		highScore = new JLabel("BEST");
-		highScore.setFont(new Font("Calibri", Font.PLAIN, 20));
+		bestScore = new JLabel("BEST");
+		bestScore.setFont(new Font("Calibri", Font.PLAIN, 20));
 
 		add(score);
 		add(new JLabel("     "));
-		add(highScore);
+		add(bestScore);
 	}
+
 }

@@ -3,6 +3,7 @@ package groupProject.twentyFortyEight;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Game2048Frame extends JFrame {
 
@@ -19,8 +20,10 @@ public class Game2048Frame extends JFrame {
 
 		setLayout(new BorderLayout());
 
-		gridPanel = new GridPanel();
-		optionsPanel = new OptionsPanel(gridPanel);
+		JLabel score = new JLabel();
+		JLabel bestScore = new JLabel();
+		gridPanel = new GridPanel(score, bestScore);
+		optionsPanel = new OptionsPanel(gridPanel, score, bestScore);
 
 		add(gridPanel, BorderLayout.CENTER);
 		add(optionsPanel, BorderLayout.NORTH);
