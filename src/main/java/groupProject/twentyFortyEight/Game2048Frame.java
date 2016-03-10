@@ -9,6 +9,7 @@ public class Game2048Frame extends JFrame {
 
 	private final GridPanel gridPanel;
 	private final OptionsPanel optionsPanel;
+	private GameLogic gameLogic;
 
 	public Game2048Frame() {
 
@@ -20,10 +21,9 @@ public class Game2048Frame extends JFrame {
 
 		setLayout(new BorderLayout());
 
-		JLabel score = new JLabel();
-		JLabel bestScore = new JLabel();
-		gridPanel = new GridPanel(score, bestScore);
-		optionsPanel = new OptionsPanel(gridPanel, score, bestScore);
+		gameLogic = new GameLogic();
+		gridPanel = new GridPanel(gameLogic);
+		optionsPanel = new OptionsPanel(gridPanel, gameLogic);
 
 		add(gridPanel, BorderLayout.CENTER);
 		add(optionsPanel, BorderLayout.NORTH);

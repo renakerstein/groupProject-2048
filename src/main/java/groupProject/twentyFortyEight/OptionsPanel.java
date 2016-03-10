@@ -3,6 +3,8 @@ package groupProject.twentyFortyEight;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -15,15 +17,13 @@ public class OptionsPanel extends JPanel {
 	private final JLabel bestScore;
 	private final JLabel score;
 	private final JLabel newGame;
+	private GameLogic gameLogic;
 
-	public OptionsPanel(final GridPanel gridPanel, JLabel score,
-			JLabel bestScore) {
+	public OptionsPanel(final GridPanel gridPanel, GameLogic logic) {
 
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		setBackground(Color.WHITE.brighter());
-
-		this.score = score;
-		this.bestScore = bestScore;
+		gameLogic = logic;
 
 		gameTitle = new JLabel("2048");
 		gameTitle.setFont(new Font("Calibri", Font.BOLD, 110));
@@ -63,6 +63,14 @@ public class OptionsPanel extends JPanel {
 		add(score);
 		add(new JLabel("     "));
 		add(bestScore);
+
+		this.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				score.setText(String.valueOf(gameLogic.getScore()));
+			}
+		});
 	}
 
 }

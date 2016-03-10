@@ -17,18 +17,14 @@ public class GridPanel extends JPanel {
 
 	private final JLabel[][] labels;
 	private Tile[][] tiles;
-	private GameLogic logic;
-	private JLabel score, bestScore;
+	private GameLogic gameLogic;
 
-	public GridPanel(JLabel scoreLabel, JLabel bestScore) {
+	public GridPanel(GameLogic logic) {
 
 		setLayout(new GridLayout(4, 4));
-		logic = new GameLogic();
+		gameLogic = logic;
 		labels = new JLabel[4][4];
 		newGame();
-
-		this.score = scoreLabel;
-		this.bestScore = bestScore;
 
 		for (int i = 0; i < labels.length; i++) {
 			for (int j = 0; j < labels[i].length; j++) {
@@ -47,21 +43,20 @@ public class GridPanel extends JPanel {
 				switch (e.getKeyCode()) {
 
 				case KeyEvent.VK_LEFT:
-					logic.moveLeft();
+					gameLogic.moveLeft();
 					break;
 
 				case KeyEvent.VK_RIGHT:
-					logic.moveRight();
+					gameLogic.moveRight();
 					break;
 				case KeyEvent.VK_UP:
-					logic.moveUp();
+					gameLogic.moveUp();
 					break;
 				case KeyEvent.VK_DOWN:
-					logic.moveDown();
+					gameLogic.moveDown();
 					break;
 				}
-				score.setText(String.valueOf(logic.getScore()));
-				logic.addTile();
+				gameLogic.addTile();
 				repaint();
 			}
 		});
@@ -86,37 +81,30 @@ public class GridPanel extends JPanel {
 					won = true;
 					break;
 				}
-				if (logic.gameOver()) {
+				if (gameLogic.gameOver()) {
 					lost = true;
 					break;
 				}
 			}
 		}
 		if (won) {
-			
 
-			logic = new GameLogic();
+			gameLogic.newGame();
 			newGame();
 			repaint();
-			/**
-			 * g.setColor(new Color(255, 255, 255, 30)); g.fillRect(0, 0,
-			 * getWidth(), getHeight()); g.setColor(new Color(78, 139, 202));
-			 * g.setFont(new Font("Calibri", Font.BOLD, 48));
-			 * g.drawString("You won!", 68, 150);
-			 */
 		}
-		
-		if(lost){
-		//	repaint();
+
+		if (lost) {
 			JOptionPane.showMessageDialog(this,
-					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING"
-					);
+					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
 		}
 	}
 
 	public void newGame() {
-		logic.addTile();
-		logic.addTile();
-		tiles = logic.getTiles();
+		gameLogic.newGame();
+		gameLogic.addTile();
+		gameLogic.addTile();
+		tiles = gameLogic.getTiles();
+		repaint();
 	}
 }

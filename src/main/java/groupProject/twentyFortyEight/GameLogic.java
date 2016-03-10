@@ -10,21 +10,23 @@ public class GameLogic {
 	private Tile chosenSlot;
 	private int currentVal, comparisonVal;
 	private Tile current, comparison;
-	private boolean merged;
-	private int score;
-	private final int bestScore;
+	private int score = 0;
+	private int bestScore = 0;
 
 	public GameLogic() {
 		this.gameTiles = new Tile[4][4];
+		newGame();
+	}
+
+	public void newGame() {
+		bestScore = score;
+		score = 0;
+		this.availableSlots = new ArrayList<Tile>();
 		for (int row = 0; row < gameTiles.length; row++) {
 			for (int column = 0; column < gameTiles[row].length; column++) {
 				gameTiles[row][column] = new Tile();
 			}
 		}
-		this.availableSlots = new ArrayList<Tile>();
-		this.merged = false;
-		this.score = 0;
-		this.bestScore = 0;
 	}
 
 	public Tile addTile() {
