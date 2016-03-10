@@ -8,7 +8,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,10 +16,14 @@ public class GridPanel extends JPanel {
 
 	private final JLabel[][] labels;
 	private Tile[][] tiles;
-	private GameLogic gameLogic;
+	private final GameLogic gameLogic;
+	private final Font largeFont;
+	private final Font smallFont;
 
 	public GridPanel(GameLogic logic) {
 
+		largeFont = new Font("Calibri", Font.PLAIN, 100);
+		smallFont = new Font("Calibri", Font.PLAIN, 80);
 		setLayout(new GridLayout(4, 4));
 		gameLogic = logic;
 		labels = new JLabel[4][4];
@@ -29,8 +32,7 @@ public class GridPanel extends JPanel {
 		for (int i = 0; i < labels.length; i++) {
 			for (int j = 0; j < labels[i].length; j++) {
 				labels[i][j] = new JLabel();
-				labels[i][j].setBorder((BorderFactory.createLineBorder(
-						new Color(0xbbada0), 5)));
+				labels[i][j].setBorder((BorderFactory.createLineBorder(new Color(0xbbada0), 5)));
 				add(labels[i][j]);
 				labels[i][j].setOpaque(true);
 			}
@@ -71,7 +73,11 @@ public class GridPanel extends JPanel {
 			for (int j = 0; j < labels[i].length; j++) {
 				labels[i][j].setBackground(tiles[i][j].getBackground());
 				labels[i][j].setForeground(tiles[i][j].getForeground());
-				labels[i][j].setFont(new Font("Calibri", Font.PLAIN, 100));
+				if (tiles[i][j].getValue() < 128) {
+					labels[i][j].setFont(largeFont);
+				} else {
+					labels[i][j].setFont(smallFont);
+				}
 				if (tiles[i][j].getValue() != 0) {
 					labels[i][j].setText(" " + tiles[i][j].getValue());
 				} else {
@@ -95,8 +101,7 @@ public class GridPanel extends JPanel {
 		}
 
 		if (lost) {
-			JOptionPane.showMessageDialog(this,
-					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
+			JOptionPane.showMessageDialog(this, "HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
 		}
 	}
 

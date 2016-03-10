@@ -32,8 +32,7 @@ public class GameLogic {
 	public Tile addTile() {
 		availableSlots = emptySlots();
 		if (!availableSlots.isEmpty()) {
-			int index = (int) (Math.random() * availableSlots.size())
-					% availableSlots.size();
+			int index = (int) (Math.random() * availableSlots.size()) % availableSlots.size();
 			chosenSlot = availableSlots.get(index);
 			chosenSlot.setValue(Math.random() < 0.9 ? 2 : 4);
 		}
@@ -113,7 +112,7 @@ public class GameLogic {
 
 	public LinkedList<Tile> mergeLine(LinkedList<Tile> list) {
 		removeSpacesInList(list);
-		for (int i = 0; i < list.size() - 1; i++) {
+		for (int i = 0; i < (list.size() - 1); i++) {
 			current = list.get(i);
 			currentVal = current.getValue();
 			comparison = list.get(i + 1);
@@ -177,14 +176,10 @@ public class GameLogic {
 
 		for (int i = 0; i < gameTiles.length; i++) {
 			for (int j = 0; j < gameTiles[i].length; j++) {
-				if ((j != 3)
-						&& (gameTiles[i][j].getValue() == gameTiles[i][j + 1]
-								.getValue())) {
+				if ((j != 3) && (gameTiles[i][j].getValue() == gameTiles[i][j + 1].getValue())) {
 					return false;
 				}
-				if ((i != 3)
-						&& (gameTiles[i][j].getValue() == gameTiles[i + 1][j]
-								.getValue())) {
+				if ((i != 3) && (gameTiles[i][j].getValue() == gameTiles[i + 1][j].getValue())) {
 					return false;
 				}
 			}
@@ -194,9 +189,9 @@ public class GameLogic {
 	}
 
 	private boolean boardFull() {
-		for (int i = 0; i < gameTiles.length; i++) {
-			for (int j = 0; j < gameTiles[i].length; j++) {
-				if (gameTiles[i][j].getValue() == 0) {
+		for (Tile[] gameTile : gameTiles) {
+			for (int j = 0; j < gameTile.length; j++) {
+				if (gameTile[j].getValue() == 0) {
 					return false;
 				}
 			}
