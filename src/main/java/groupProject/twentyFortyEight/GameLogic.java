@@ -30,7 +30,8 @@ public class GameLogic {
 	public Tile addTile() {
 		availableSlots = emptySlots();
 		if (!availableSlots.isEmpty()) {
-			int index = (int) (Math.random() * availableSlots.size()) % availableSlots.size();
+			int index = (int) (Math.random() * availableSlots.size())
+					% availableSlots.size();
 			chosenSlot = availableSlots.get(index);
 			chosenSlot.setValue(Math.random() < 0.9 ? 2 : 4);
 		}
@@ -50,6 +51,17 @@ public class GameLogic {
 						comparisonVal = comparison.getValue();
 						if ((col - counter) == 0) {
 							merged = checkForEquality();
+						} else {
+							boolean space = true;
+							for (int i = 0; i < (counter - col); i++) {
+								if (gameTiles[col][i + 1].getValue() != 0) {
+									space = false;
+									break;
+								}
+							}
+							if (space) {
+								merged = checkForEquality();
+							}
 						}
 						if (merged) {
 							score += current.getValue();
@@ -93,6 +105,17 @@ public class GameLogic {
 						comparisonVal = comparison.getValue();
 						if ((col - counter) == 0) {
 							merged = checkForEquality();
+						} else {
+							boolean space = true;
+							for (int i = 0; i < (counter - col); i++) {
+								if (gameTiles[col][i + 1].getValue() != 0) {
+									space = false;
+									break;
+								}
+							}
+							if (space) {
+								merged = checkForEquality();
+							}
 						}
 						if (merged) {
 							score += current.getValue();
@@ -135,8 +158,19 @@ public class GameLogic {
 					while (counter != 0) {
 						comparison = gameTiles[counter - 1][row];
 						comparisonVal = comparison.getValue();
-						if ((col - counter) == 0) {
+						if ((counter - col) == 0) {
 							merged = checkForEquality();
+						} else {
+							boolean space = true;
+							for (int i = 0; i < (counter - col); i++) {
+								if (gameTiles[i + 1][col].getValue() != 0) {
+									space = false;
+									break;
+								}
+							}
+							if (space) {
+								merged = checkForEquality();
+							}
 						}
 						if (merged) {
 							score += current.getValue();
@@ -178,8 +212,19 @@ public class GameLogic {
 					while (counter != 3) {
 						comparison = gameTiles[counter + 1][row];
 						comparisonVal = comparison.getValue();
-						if ((col - counter) == 0) {
+						if ((counter - col) == 0) {
 							merged = checkForEquality();
+						} else {
+							boolean space = true;
+							for (int i = 0; i < (counter - col); i++) {
+								if (gameTiles[i + 1][col].getValue() != 0) {
+									space = false;
+									break;
+								}
+							}
+							if (space) {
+								merged = checkForEquality();
+							}
 						}
 						if (merged) {
 							score += current.getValue();
@@ -246,17 +291,36 @@ public class GameLogic {
 	}
 
 	public boolean gameOver() {
+		if (!boardFull()) {
+			return false;
+		}
+
 		for (int i = 0; i < gameTiles.length; i++) {
 			for (int j = 0; j < gameTiles[i].length; j++) {
-				if ((j != 3) && (gameTiles[i][j].getValue() == gameTiles[i][j + 1].getValue())) {
+				if ((j != 3)
+						&& (gameTiles[i][j].getValue() == gameTiles[i][j + 1]
+								.getValue())) {
 					return false;
 				}
-				if ((i != 3) && (gameTiles[i][j].getValue() == gameTiles[i + 1][j].getValue())) {
+				if ((i != 3)
+						&& (gameTiles[i][j].getValue() == gameTiles[i + 1][j]
+								.getValue())) {
+					return false;
+				}
+			}
+
+		}
+		return true;
+	}
+
+	private boolean boardFull() {
+		for (int i = 0; i < gameTiles.length; i++) {
+			for (int j = 0; j < gameTiles[i].length; j++) {
+				if (gameTiles[i][j].getValue() == 0) {
 					return false;
 				}
 			}
 		}
-
 		return true;
 	}
 }

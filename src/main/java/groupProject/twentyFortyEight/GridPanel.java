@@ -88,6 +88,7 @@ public class GridPanel extends JPanel {
 				}
 				if (logic.gameOver()) {
 					lost = true;
+					break;
 				}
 			}
 		}
@@ -103,6 +104,13 @@ public class GridPanel extends JPanel {
 			 * g.setFont(new Font("Calibri", Font.BOLD, 48));
 			 * g.drawString("You won!", 68, 150);
 			 */
+		}
+		
+		if(lost){
+		//	repaint();
+			JOptionPane.showMessageDialog(this,
+					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING"
+					);
 		}
 	}
 
