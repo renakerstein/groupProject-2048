@@ -66,7 +66,7 @@ public class GridPanel extends JPanel {
 					return;
 				}
 				gameLogic.addTile();
-				scoreLabel.setText(String.valueOf("<html>SCORE<br>" + gameLogic.getScore() + "</html>"));
+
 				repaint();
 			}
 		});
@@ -75,6 +75,7 @@ public class GridPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		scoreLabel.setText(String.valueOf("<html>SCORE<br>" + gameLogic.getScore() + "</html>"));
 		boolean won = false;
 		boolean lost = false;
 		for (int i = 0; i < labels.length; i++) {
