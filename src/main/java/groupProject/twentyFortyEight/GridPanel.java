@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class GridPanel extends JPanel {
 
@@ -19,8 +20,11 @@ public class GridPanel extends JPanel {
 	private final GameLogic gameLogic;
 	private final Font largeFont;
 	private final Font smallFont;
+	private final JLabel scoreLabel;
 
-	public GridPanel(GameLogic logic) {
+	public GridPanel(GameLogic logic, final JLabel score) {
+
+		this.scoreLabel = score;
 
 		largeFont = new Font("Calibri", Font.PLAIN, 100);
 		smallFont = new Font("Calibri", Font.PLAIN, 80);
@@ -32,6 +36,7 @@ public class GridPanel extends JPanel {
 		for (int i = 0; i < labels.length; i++) {
 			for (int j = 0; j < labels[i].length; j++) {
 				labels[i][j] = new JLabel();
+				labels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
 				labels[i][j].setBorder((BorderFactory.createLineBorder(new Color(0xbbada0), 5)));
 				add(labels[i][j]);
 				labels[i][j].setOpaque(true);
@@ -47,7 +52,6 @@ public class GridPanel extends JPanel {
 				case KeyEvent.VK_LEFT:
 					gameLogic.moveLeft();
 					break;
-
 				case KeyEvent.VK_RIGHT:
 					gameLogic.moveRight();
 					break;
@@ -57,16 +61,20 @@ public class GridPanel extends JPanel {
 				case KeyEvent.VK_DOWN:
 					gameLogic.moveDown();
 					break;
+				case KeyEvent.VK_ESCAPE:
+					newGame();
+					return;
 				}
 				gameLogic.addTile();
+				scoreLabel.setText(String.valueOf("<html>SCORE<br>" + gameLogic.getScore() + "</html>"));
 				repaint();
 			}
 		});
 	}
 
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		boolean won = false;
 		boolean lost = false;
 		for (int i = 0; i < labels.length; i++) {
@@ -79,7 +87,7 @@ public class GridPanel extends JPanel {
 					labels[i][j].setFont(smallFont);
 				}
 				if (tiles[i][j].getValue() != 0) {
-					labels[i][j].setText(" " + tiles[i][j].getValue());
+					labels[i][j].setText(String.valueOf(tiles[i][j].getValue()));
 				} else {
 					labels[i][j].setText("");
 				}
@@ -94,7 +102,6 @@ public class GridPanel extends JPanel {
 			}
 		}
 		if (won) {
-
 			gameLogic.newGame();
 			newGame();
 			repaint();
