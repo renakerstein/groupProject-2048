@@ -121,7 +121,6 @@ public class GridPanel extends JPanel {
 
 		if (lost) {
 			JOptionPane.showMessageDialog(this, "You lost-HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
-			if()
 			gameLogic.newGame();
 			newGame();
 			repaint();
