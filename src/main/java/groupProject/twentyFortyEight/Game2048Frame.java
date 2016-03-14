@@ -16,7 +16,7 @@ public class Game2048Frame extends JFrame {
 
 	private final GridPanel gridPanel;
 	private final GameLogic gameLogic;
-	private JLabel score;
+	private JLabel scoreLabel, highScoreLabel;
 
 	public Game2048Frame() {
 
@@ -30,7 +30,7 @@ public class Game2048Frame extends JFrame {
 
 		gameLogic = new GameLogic();
 		JPanel optionsPanel = optionsPanel();
-		gridPanel = new GridPanel(gameLogic, score);
+		gridPanel = new GridPanel(gameLogic, scoreLabel, highScoreLabel);
 
 		add(gridPanel, BorderLayout.CENTER);
 		add(optionsPanel, BorderLayout.NORTH);
@@ -39,8 +39,7 @@ public class Game2048Frame extends JFrame {
 
 	public JPanel optionsPanel() {
 		JPanel optionsPanel = new JPanel();
-		JLabel gameTitle, bestScore;
-		JLabel newGame;
+		JLabel gameTitle, newGame;
 
 		optionsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 22, 30));
 		optionsPanel.setBackground(Color.WHITE.brighter());
@@ -73,14 +72,15 @@ public class Game2048Frame extends JFrame {
 
 		optionsPanel.add(newGame);
 
-		score = new JLabel(String.valueOf("<html>SCORE<br>0</html>"));
-		score.setHorizontalAlignment(SwingConstants.CENTER);
-		score.setFont(new Font("Calibri", Font.PLAIN, 20));
-		bestScore = new JLabel(String.valueOf("<html>BEST SCORE<br>0</html>"));
-		bestScore.setFont(new Font("Calibri", Font.PLAIN, 20));
+		scoreLabel = new JLabel(String.valueOf("<html>SCORE<br>0</html>"));
+		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		scoreLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+		highScoreLabel = new JLabel(
+				String.valueOf("<html>BEST SCORE<br>0</html>"));
+		highScoreLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
 
-		optionsPanel.add(score);
-		optionsPanel.add(bestScore);
+		optionsPanel.add(scoreLabel);
+		optionsPanel.add(highScoreLabel);
 
 		return optionsPanel;
 	}

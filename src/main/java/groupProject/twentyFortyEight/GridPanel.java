@@ -12,22 +12,24 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 
 public class GridPanel extends JPanel {
 
 	private final JLabel[][] labels;
 	private Tile[][] tiles;
 	private final GameLogic gameLogic;
-	private final Font largeFont;
-	private final Font smallFont;
-	private final JLabel scoreLabel;
+	private final Font largeFont, mediumFont, smallFont;
+	private final JLabel scoreLabel, highScoreLabel;
 
-	public GridPanel(GameLogic logic, final JLabel score) {
+	public GridPanel(GameLogic logic, final JLabel score, JLabel highScoreLabel) {
 
 		this.scoreLabel = score;
+		this.highScoreLabel = highScoreLabel;
 
 		largeFont = new Font("Calibri", Font.PLAIN, 100);
-		smallFont = new Font("Calibri", Font.PLAIN, 80);
+		mediumFont = new Font("Calibri", Font.PLAIN, 80);
+		smallFont = new Font("Calibri", Font.PLAIN, 60);
 		setLayout(new GridLayout(4, 4));
 		gameLogic = logic;
 		labels = new JLabel[4][4];
@@ -37,7 +39,6 @@ public class GridPanel extends JPanel {
 			for (int j = 0; j < labels[i].length; j++) {
 				labels[i][j] = new JLabel();
 				labels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
-				labels[i][j].setBorder((BorderFactory.createLineBorder(new Color(0xbbada0), 5)));
 				add(labels[i][j]);
 				labels[i][j].setOpaque(true);
 			}
@@ -75,20 +76,32 @@ public class GridPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		scoreLabel.setText(String.valueOf("<html>SCORE<br>" + gameLogic.getScore() + "</html>"));
+		scoreLabel.setText(String.valueOf("<html>SCORE<br>"
+				+ gameLogic.getScore() + "</html>"));
+		highScoreLabel.setText(String.valueOf("<html>HIGH SCORE<br>"
+				+ gameLogic.getBestScore() + "<html>"));
 		boolean won = false;
 		boolean lost = false;
 		for (int i = 0; i < labels.length; i++) {
 			for (int j = 0; j < labels[i].length; j++) {
 				labels[i][j].setBackground(tiles[i][j].getBackground());
 				labels[i][j].setForeground(tiles[i][j].getForeground());
+				labels[i][j]
+						.setBorder(BorderFactory.createCompoundBorder(
+								BorderFactory.createLineBorder(new Color(
+										0xbbada0), 5),
+								BorderFactory
+										.createEtchedBorder(EtchedBorder.LOWERED)));
 				if (tiles[i][j].getValue() < 128) {
 					labels[i][j].setFont(largeFont);
+				} else if (tiles[i][j].getValue() < 1024) {
+					labels[i][j].setFont(mediumFont);
 				} else {
 					labels[i][j].setFont(smallFont);
 				}
 				if (tiles[i][j].getValue() != 0) {
-					labels[i][j].setText(String.valueOf(tiles[i][j].getValue()));
+					labels[i][j]
+							.setText(String.valueOf(tiles[i][j].getValue()));
 				} else {
 					labels[i][j].setText("");
 				}
@@ -109,7 +122,8 @@ public class GridPanel extends JPanel {
 		}
 
 		if (lost) {
-			JOptionPane.showMessageDialog(this, "HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
+			JOptionPane.showMessageDialog(this,
+					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
 		}
 	}
 
