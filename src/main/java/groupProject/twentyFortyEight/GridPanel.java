@@ -83,7 +83,7 @@ public class GridPanel extends JPanel {
 		scoreLabel.setText(String.valueOf("<html>SCORE<br>"
 				+ gameLogic.getScore() + "</html>"));
 		highScoreLabel.setText(String.valueOf("<html>HIGH SCORE<br>"
-				+ gameLogic.getBestScore() + "<html>"));
+				+ gameLogic.getHighScore() + "<html>"));
 		boolean won = false;
 		boolean lost = false;
 		for (int i = 0; i < labels.length; i++) {

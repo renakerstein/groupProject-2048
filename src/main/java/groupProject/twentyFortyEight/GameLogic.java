@@ -11,8 +11,8 @@ public class GameLogic {
 	private int currentVal, comparisonVal;
 	private Tile current, comparison;
 	private int score = 0;
-	private int bestScore = 0;
-	boolean merged=false;
+	private int highScore;
+	boolean merged = false;
 
 	public GameLogic() {
 		this.gameTiles = new Tile[4][4];
@@ -20,7 +20,9 @@ public class GameLogic {
 	}
 
 	public void newGame() {
-		bestScore = score;
+		if (score > highScore) {
+			highScore = score;
+		}
 		score = 0;
 		this.availableSlots = new ArrayList<Tile>();
 		for (int row = 0; row < gameTiles.length; row++) {
@@ -37,11 +39,12 @@ public class GameLogic {
 	public void addTile() {
 		availableSlots = emptySlots();
 		if (!availableSlots.isEmpty()) {
-			int index = (int) (Math.random() * availableSlots.size()) % availableSlots.size();
+			int index = (int) (Math.random() * availableSlots.size())
+					% availableSlots.size();
 			chosenSlot = availableSlots.get(index);
 			chosenSlot.setValue(Math.random() < 0.9 ? 2 : 4);
 		}
-	
+
 	}
 
 	public void moveLeft() {
@@ -122,7 +125,7 @@ public class GameLogic {
 			currentVal = current.getValue();
 			comparison = list.get(i + 1);
 			comparisonVal = comparison.getValue();
-			 merged = checkForEquality();
+			merged = checkForEquality();
 			if (merged) {
 				score += current.getValue();
 			}
@@ -170,8 +173,8 @@ public class GameLogic {
 		return score;
 	}
 
-	public int getBestScore() {
-		return bestScore;
+	public int getHighScore() {
+		return highScore;
 	}
 
 	public boolean gameOver() {
@@ -181,22 +184,28 @@ public class GameLogic {
 
 		for (int i = 0; i < gameTiles.length; i++) {
 			for (int j = 0; j < gameTiles[i].length; j++) {
-				if ((j != 3) && (gameTiles[i][j].getValue() == gameTiles[i][j + 1].getValue())) {
+				if ((j != 3)
+						&& (gameTiles[i][j].getValue() == gameTiles[i][j + 1]
+								.getValue())) {
 					return false;
 				}
-				if ((i != 3) && (gameTiles[i][j].getValue() == gameTiles[i + 1][j].getValue())) {
+				if ((i != 3)
+						&& (gameTiles[i][j].getValue() == gameTiles[i + 1][j]
+								.getValue())) {
 					return false;
 				}
 			}
-
+		}
+		if (score > highScore) {
+			highScore = score;
 		}
 		return true;
 	}
 
 	private boolean boardFull() {
 		for (Tile[] gameTile : gameTiles) {
-			for (int j = 0; j < gameTile.length; j++) {
-				if (gameTile[j].getValue() == 0) {
+			for (Tile element : gameTile) {
+				if (element.getValue() == 0) {
 					return false;
 				}
 			}
