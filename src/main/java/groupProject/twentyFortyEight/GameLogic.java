@@ -12,6 +12,7 @@ public class GameLogic {
 	private Tile current, comparison;
 	private int score = 0;
 	private int bestScore = 0;
+	boolean merged=false;
 
 	public GameLogic() {
 		this.gameTiles = new Tile[4][4];
@@ -29,14 +30,18 @@ public class GameLogic {
 		}
 	}
 
-	public Tile addTile() {
+	public boolean isMerged() {
+		return merged;
+	}
+
+	public void addTile() {
 		availableSlots = emptySlots();
 		if (!availableSlots.isEmpty()) {
 			int index = (int) (Math.random() * availableSlots.size()) % availableSlots.size();
 			chosenSlot = availableSlots.get(index);
 			chosenSlot.setValue(Math.random() < 0.9 ? 2 : 4);
 		}
-		return chosenSlot; // get row and column of this specific tile
+	
 	}
 
 	public void moveLeft() {
@@ -117,7 +122,7 @@ public class GameLogic {
 			currentVal = current.getValue();
 			comparison = list.get(i + 1);
 			comparisonVal = comparison.getValue();
-			boolean merged = checkForEquality();
+			 merged = checkForEquality();
 			if (merged) {
 				score += current.getValue();
 			}

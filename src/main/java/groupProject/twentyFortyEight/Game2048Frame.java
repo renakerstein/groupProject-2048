@@ -21,20 +21,17 @@ public class Game2048Frame extends JFrame {
 	public Game2048Frame() {
 
 		setTitle("2048");
-		setSize(680, 800);
+		setSize(680, 750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
 
 		setLayout(new BorderLayout());
-
 		gameLogic = new GameLogic();
 		JPanel optionsPanel = optionsPanel();
 		gridPanel = new GridPanel(gameLogic, scoreLabel, highScoreLabel);
-
 		add(gridPanel, BorderLayout.CENTER);
 		add(optionsPanel, BorderLayout.NORTH);
-
 	}
 
 	public JPanel optionsPanel() {

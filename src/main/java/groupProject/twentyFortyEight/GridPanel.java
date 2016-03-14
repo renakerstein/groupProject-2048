@@ -3,7 +3,9 @@ package groupProject.twentyFortyEight;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -30,6 +32,7 @@ public class GridPanel extends JPanel {
 		largeFont = new Font("Calibri", Font.PLAIN, 100);
 		mediumFont = new Font("Calibri", Font.PLAIN, 80);
 		smallFont = new Font("Calibri", Font.PLAIN, 60);
+
 		setLayout(new GridLayout(4, 4));
 		gameLogic = logic;
 		labels = new JLabel[4][4];
@@ -66,6 +69,7 @@ public class GridPanel extends JPanel {
 					newGame();
 					return;
 				}
+
 				gameLogic.addTile();
 
 				repaint();
@@ -99,6 +103,7 @@ public class GridPanel extends JPanel {
 				} else {
 					labels[i][j].setFont(smallFont);
 				}
+
 				if (tiles[i][j].getValue() != 0) {
 					labels[i][j]
 							.setText(String.valueOf(tiles[i][j].getValue()));
@@ -107,24 +112,61 @@ public class GridPanel extends JPanel {
 				}
 				if (tiles[i][j].getValue() == 2048) {
 					won = true;
-					break;
 				}
 				if (gameLogic.gameOver()) {
 					lost = true;
-					break;
 				}
 			}
 		}
 		if (won) {
-			gameLogic.newGame();
-			newGame();
+			endGameMsg(g);
+			/*
+			 * JOptionPane.showMessageDialog(this,
+			 * "You won-HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
+			 * gameLogic.newGame(); newGame(); repaint();*
+			 */
 			repaint();
 		}
 
 		if (lost) {
 			JOptionPane.showMessageDialog(this,
 					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
+			JOptionPane.showMessageDialog(this,
+					"You lost-HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
+			gameLogic.newGame();
+			newGame();
+			repaint();
 		}
+
+	}
+
+	public void endGameMsg(Graphics g2) {
+		Graphics2D g = (Graphics2D) g2;
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
+				RenderingHints.VALUE_STROKE_NORMALIZE);
+		g.setColor(new Color(255, 255, 255, 30));
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.setColor(new Color(78, 139, 202));
+		g.setFont(new Font("Arial", Font.BOLD, 48));
+
+		g.drawString("You won!", 68, 150);
+
+		/*
+		 * if (myLose) { g.drawString("Game over!", 50, 130);
+		 * g.drawString("You lose!", 64, 200); }
+		 * 
+		 * g.setFont(new Font(FONT_NAME, Font.PLAIN, 16)); g.setColor(new
+		 * Color(128, 128, 128, 128)); g.drawString("Press ESC to play again",
+		 * 80, getHeight() - 40);
+		 * 
+		 * } g.setFont(new Font(FONT_NAME, Font.PLAIN, 18));
+		 * g.drawString("Score: " + myScore, 200, 365);
+		 * 
+		 * }*
+		 */
+
 	}
 
 	public void newGame() {
