@@ -21,7 +21,7 @@ public class Game2048Frame extends JFrame {
 	public Game2048Frame() {
 
 		setTitle("2048");
-		setSize(680, 750);
+		setSize(620, 750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
