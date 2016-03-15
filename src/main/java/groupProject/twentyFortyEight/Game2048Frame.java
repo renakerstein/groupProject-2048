@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -45,25 +46,6 @@ public class Game2048Frame extends JFrame {
 		container.add(optionsPanel);
 		container.add(scorePanel);
 		add(container, BorderLayout.NORTH);
-	}
-
-	public JPanel scorePanel() {
-		JPanel scorePanel = new JPanel();
-		scorePanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 22, 0));
-		scorePanel.setBackground(Color.WHITE);
-		scorePanel.setPreferredSize(new Dimension(getWidth(), 60));
-
-		scoreLabel = new JLabel(String.valueOf("<html>SCORE<br>0</html>"));
-		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		scoreLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
-		highScoreLabel = new JLabel(
-				String.valueOf("<html>BEST SCORE<br>0</html>"));
-		highScoreLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
-
-		scorePanel.add(scoreLabel);
-		scorePanel.add(highScoreLabel);
-
-		return scorePanel;
 	}
 
 	public JPanel optionsPanel() {
@@ -104,6 +86,11 @@ public class Game2048Frame extends JFrame {
 		howToPlay.addMouseListener(new MouseListener() {
 
 			public void mouseClicked(MouseEvent arg0) {
+				JOptionPane
+						.showMessageDialog(
+								getContentPane(),
+								"Use your arrow keys to move the tiles. \nWhen two tiles with the same number touch, they merge into one!\nTo win, get to 2048!",
+								"HOW TO PLAY", JOptionPane.PLAIN_MESSAGE);
 			}
 
 			public void mouseEntered(MouseEvent arg0) {
@@ -124,4 +111,24 @@ public class Game2048Frame extends JFrame {
 
 		return optionsPanel;
 	}
+
+	public JPanel scorePanel() {
+		JPanel scorePanel = new JPanel();
+		scorePanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 22, 0));
+		scorePanel.setBackground(Color.WHITE);
+		scorePanel.setPreferredSize(new Dimension(getWidth(), 60));
+
+		scoreLabel = new JLabel(String.valueOf("<html>SCORE<br>0</html>"));
+		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		scoreLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+		highScoreLabel = new JLabel(
+				String.valueOf("<html>BEST SCORE<br>0</html>"));
+		highScoreLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+
+		scorePanel.add(scoreLabel);
+		scorePanel.add(highScoreLabel);
+
+		return scorePanel;
+	}
+
 }

@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
@@ -90,12 +89,10 @@ public class GridPanel extends JPanel {
 			for (int j = 0; j < labels[i].length; j++) {
 				labels[i][j].setBackground(tiles[i][j].getBackground());
 				labels[i][j].setForeground(tiles[i][j].getForeground());
-				labels[i][j]
-						.setBorder(BorderFactory.createCompoundBorder(
-								BorderFactory.createLineBorder(new Color(
-										0xbbada0), 5),
-								BorderFactory
-										.createEtchedBorder(EtchedBorder.LOWERED)));
+				labels[i][j].setBorder(BorderFactory.createCompoundBorder(
+						BorderFactory.createLineBorder(new Color(0xbbada0), 5),
+						BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+								Color.WHITE, Color.WHITE)));
 				if (tiles[i][j].getValue() < 128) {
 					labels[i][j].setFont(largeFont);
 				} else if (tiles[i][j].getValue() < 1024) {
@@ -125,17 +122,27 @@ public class GridPanel extends JPanel {
 			 * "You won-HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
 			 * gameLogic.newGame(); newGame(); repaint();*
 			 */
+			g.fillRect(0, 0, getWidth(), getHeight());
 			repaint();
 		}
 
 		if (lost) {
-			JOptionPane.showMessageDialog(this,
-					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
-			JOptionPane.showMessageDialog(this,
-					"You lost-HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
+
+			g.setColor(new Color(255, 255, 255, 30));
+			g.fillRect(0, 0, 700, 700);
+			g.setColor(new Color(78, 139, 202));
+			g.setFont(new Font("Calibri", Font.BOLD, 48));
+
+			g.drawString("You won!", 68, 150);
+
+			// fillRect(0, 0, getWidth(), getHeight());
+			// JOptionPane.showMessageDialog(this,
+			// "HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
+			// JOptionPane.showMessageDialog(this,
+			// "You lost-HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
 			gameLogic.newGame();
-			newGame();
-			repaint();
+			// newGame();
+			// repaint();
 		}
 
 	}
