@@ -137,8 +137,6 @@ public class GridPanel extends JPanel {
 					"2048", JOptionPane.YES_NO_OPTION,
 					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
 		playAgain(g);
-	
-		
 	}
 	}
 
@@ -156,8 +154,6 @@ public class GridPanel extends JPanel {
 		
 		}
 	}
-
-
 
 	public void newGame() {
 		lost=false;
