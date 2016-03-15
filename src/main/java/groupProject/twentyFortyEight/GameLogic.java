@@ -57,7 +57,7 @@ public class GameLogic {
 				list2.add(gameTiles[row][column]);
 			}
 
-			list = mergeLine(list);
+			list = mergeLineLU(list);
 
 			while (list.size() != 4) {
 				list.add(new Tile());
@@ -83,7 +83,7 @@ public class GameLogic {
 				list.add(gameTiles[row][column]);
 				list2.add(gameTiles[row][column]);
 			}
-			list = mergeLine(list);
+			list = mergeLineRD(list);
 			while (list.size() != 4) {
 				list.addFirst(new Tile());
 			}
@@ -109,7 +109,7 @@ public class GameLogic {
 				list2.add(gameTiles[column][row]);
 			}
 
-			list = mergeLine(list);
+			list = mergeLineLU(list);
 
 			while (list.size() != 4) {
 				list.add(new Tile());
@@ -135,7 +135,7 @@ public class GameLogic {
 				list.add(gameTiles[column][row]);
 				list2.add(gameTiles[column][row]);
 			}
-			list = mergeLine(list);
+			list = mergeLineRD(list);
 
 			while (list.size() != 4) {
 				list.addFirst(new Tile());
@@ -152,9 +152,25 @@ public class GameLogic {
 		return moved;
 	}
 
-	public LinkedList<Tile> mergeLine(LinkedList<Tile> list) {
+	public LinkedList<Tile> mergeLineRD(LinkedList<Tile> list) {
 		list = removeSpacesInList(list);
-		for (int i = 0; i < (list.size() - 1); i++) {
+		for (int i = (list.size() - 1); i >0; i--) {
+			current = list.get(i);
+			currentVal = current.getValue();
+			comparison = list.get(i - 1);
+			comparisonVal = comparison.getValue();
+			merged = checkForEquality();
+			if (merged) {
+				score += current.getValue();
+			}
+		}
+		list = removeSpacesInList(list);
+		return list;
+	}
+	
+	public LinkedList<Tile> mergeLineLU(LinkedList<Tile> list) {
+		list = removeSpacesInList(list);
+		for (int i = 0; i <(list.size() - 1); i++) {
 			current = list.get(i);
 			currentVal = current.getValue();
 			comparison = list.get(i + 1);
@@ -167,6 +183,8 @@ public class GameLogic {
 		list = removeSpacesInList(list);
 		return list;
 	}
+	
+	
 
 	public LinkedList<Tile> removeSpacesInList(LinkedList<Tile> list) {
 		for (int i = list.size() - 1; i >= 0; i--) {
