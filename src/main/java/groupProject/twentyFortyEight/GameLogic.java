@@ -265,4 +265,15 @@ public class GameLogic {
 		}
 		return true;
 	}
-}
+
+	public boolean winner() {
+		for (Tile[] gameTile : gameTiles) {
+			for (Tile element : gameTile) {
+				if (element.getValue() == 2048) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	}

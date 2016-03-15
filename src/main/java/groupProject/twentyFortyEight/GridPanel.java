@@ -112,25 +112,25 @@ public class GridPanel extends JPanel {
 							.setText(String.valueOf(tiles[i][j].getValue()));
 				} else {
 					labels[i][j].setText("");
-				}
-				if (tiles[i][j].getValue() == 2048) {
-					won = true;
-				}
-				if (gameLogic.gameOver()) {
-					lost = true;
-				}
+				}		
 			}
+		}
+		if (gameLogic.winner()) {
+			won = true;
+		}
+		
+		if (gameLogic.gameOver()) {
+			lost = true;
 		}
 		if (won) {
 			JOptionPane.showMessageDialog(this, "YOU WIN!", "2048",
 					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-			newGame();
 		}
 		if (lost) {
 
 			JOptionPane.showMessageDialog(this, "GAME OVER!", "2048",
 					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-			newGame();
+			
 		}
 		if (won || lost) {
 			newGame();
