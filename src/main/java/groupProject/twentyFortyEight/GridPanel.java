@@ -133,13 +133,12 @@ public class GridPanel extends JPanel {
 			
 			JOptionPane.showMessageDialog(this,
 					"GAME OVER!",
-					"2048", JOptionPane.PLAIN_MESSAGE,
-					new ImageIcon("2048.png"));
+					"2048", JOptionPane.PLAIN_MESSAGE,new ImageIcon("2048.png"));
 			newGame();
+
+	}
 	}
 				
-	}
-
 
 
 	public void newGame() {
