@@ -123,15 +123,18 @@ public class GridPanel extends JPanel {
 		}
 		int again;
 		if (won) {
-			again = JOptionPane.showConfirmDialog(this,
-					"                 YOU WIN \nWOULD YOU LIKE TO PLAY AGAIN?",
-					"2048", JOptionPane.YES_NO_OPTION,
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
+			again = JOptionPane
+					.showConfirmDialog(
+							this,
+							"                 YOU WIN1 \nWOULD YOU LIKE TO PLAY AGAIN?",
+							"2048", JOptionPane.YES_NO_OPTION,
+							JOptionPane.PLAIN_MESSAGE,
+							new ImageIcon("2048.png"));
 			playAgain(again, g);
 		}
 		if (lost) {
 			again = JOptionPane.showConfirmDialog(this, "                   "
-					+ "GAME OVER  \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
+					+ "GAME OVER1  \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
 					JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("2048.png"));
 			playAgain(again, g);
@@ -142,29 +145,18 @@ public class GridPanel extends JPanel {
 		if (again == JOptionPane.YES_OPTION) {
 			newGame();
 			again = JOptionPane.showConfirmDialog(this, "                   "
-					+ "YOU WIN \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
+					+ "YOU WIN2 \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
 					JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("2048.png"));
-
-			// playAgain(g);
 		}
 		if (lost) {
 			again = JOptionPane.showConfirmDialog(this, "                   "
-					+ "GAME OVER  \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
+					+ "GAME OVER2  \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
 					JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("2048.png"));
-			// playAgain(g);
-
 		}
 	}
 
-	/**
-	 * private void playAgain(Graphics g) { if (again == JOptionPane.YES_OPTION)
-	 * { newGame(); } else { JOptionPane.showMessageDialog(this,
-	 * "HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING", "2048",
-	 * JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png")); System.exit(0); }
-	 * repaint(); }
-	 */
 	public void newGame() {
 		lost = false;
 		won = false;
