@@ -12,7 +12,7 @@ public class GameLogic {
 	private Tile current, comparison;
 	private int score = 0;
 	private int highScore;
-	boolean merged = false;
+	boolean merged = false, moved;
 
 	public GameLogic() {
 		this.gameTiles = new Tile[4][4];
@@ -47,11 +47,14 @@ public class GameLogic {
 
 	}
 
-	public void moveLeft() {
+	public boolean moveLeft() {
+		moved = false;
 		for (int row = 0; row < gameTiles.length; row++) {
 			LinkedList<Tile> list = new LinkedList<Tile>();
+			LinkedList<Tile> list2 = new LinkedList<Tile>();
 			for (int column = 0; column < gameTiles[row].length; column++) {
 				list.add(gameTiles[row][column]);
+				list2.add(gameTiles[row][column]);
 			}
 
 			list = mergeLine(list);
@@ -62,32 +65,48 @@ public class GameLogic {
 			for (int i = 0; i < list.size(); i++) {
 				gameTiles[row][i] = list.get(i);
 			}
+			for (int i = 0; i < (list.size()); i++) {
+				if (list.get(i).getValue() != list2.get(i).getValue()) {
+					moved = true;
+				}
+			}
 		}
+		return moved;
 	}
 
-	public void moveRight() {
+	public boolean moveRight() {
+		moved = false;
 		for (int row = 0; row < gameTiles.length; row++) {
 			LinkedList<Tile> list = new LinkedList<Tile>();
+			LinkedList<Tile> list2 = new LinkedList<Tile>();
 			for (int column = 0; column < gameTiles[row].length; column++) {
 				list.add(gameTiles[row][column]);
+				list2.add(gameTiles[row][column]);
 			}
-
 			list = mergeLine(list);
-
 			while (list.size() != 4) {
 				list.addFirst(new Tile());
 			}
 			for (int i = list.size() - 1; i >= 0; i--) {
 				gameTiles[row][i] = list.get(i);
 			}
+			for (int i = 0; i < (list.size()); i++) {
+				if (list.get(i).getValue() != list2.get(i).getValue()) {
+					moved = true;
+				}
+			}
 		}
+		return moved;
 	}
 
-	public void moveUp() {
+	public boolean moveUp() {
+		moved = false;
 		for (int row = 0; row < gameTiles.length; row++) {
 			LinkedList<Tile> list = new LinkedList<Tile>();
+			LinkedList<Tile> list2 = new LinkedList<Tile>();
 			for (int column = 0; column < gameTiles[row].length; column++) {
 				list.add(gameTiles[column][row]);
+				list2.add(gameTiles[column][row]);
 			}
 
 			list = mergeLine(list);
@@ -98,14 +117,23 @@ public class GameLogic {
 			for (int i = 0; i < list.size(); i++) {
 				gameTiles[i][row] = list.get(i);
 			}
+			for (int i = 0; i < (list.size()); i++) {
+				if (list.get(i).getValue() != list2.get(i).getValue()) {
+					moved = true;
+				}
+			}
 		}
+		return moved;
 	}
 
-	public void moveDown() {
+	public boolean moveDown() {
+		moved = false;
 		for (int row = 0; row < gameTiles.length; row++) {
 			LinkedList<Tile> list = new LinkedList<Tile>();
+			LinkedList<Tile> list2 = new LinkedList<Tile>();
 			for (int column = 0; column < gameTiles[row].length; column++) {
 				list.add(gameTiles[column][row]);
+				list2.add(gameTiles[column][row]);
 			}
 			list = mergeLine(list);
 
@@ -115,11 +143,17 @@ public class GameLogic {
 			for (int i = 0; i < list.size(); i++) {
 				gameTiles[i][row] = list.get(i);
 			}
+			for (int i = 0; i < (list.size()); i++) {
+				if (list.get(i).getValue() != list2.get(i).getValue()) {
+					moved = true;
+				}
+			}
 		}
+		return moved;
 	}
 
 	public LinkedList<Tile> mergeLine(LinkedList<Tile> list) {
-		removeSpacesInList(list);
+		list = removeSpacesInList(list);
 		for (int i = 0; i < (list.size() - 1); i++) {
 			current = list.get(i);
 			currentVal = current.getValue();
@@ -130,7 +164,7 @@ public class GameLogic {
 				score += current.getValue();
 			}
 		}
-		removeSpacesInList(list);
+		list = removeSpacesInList(list);
 		return list;
 	}
 
@@ -149,7 +183,6 @@ public class GameLogic {
 			for (Tile element : gameTile) {
 				if (element.isEmpty()) {
 					empty.add(element);
-
 				}
 			}
 		}
