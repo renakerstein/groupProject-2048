@@ -22,15 +22,11 @@ public class GridPanel extends JPanel {
 	private final GameLogic gameLogic;
 	private final Font largeFont, mediumFont, smallFont;
 	private final JLabel scoreLabel, highScoreLabel;
-	private boolean won;
-	private boolean lost;
 
 	public GridPanel(GameLogic logic, final JLabel score, JLabel highScoreLabel) {
 
 		this.scoreLabel = score;
 		this.highScoreLabel = highScoreLabel;
-		this.won = false;
-		this.lost = false;
 
 		largeFont = new Font("Calibri", Font.PLAIN, 100);
 		mediumFont = new Font("Calibri", Font.PLAIN, 80);
@@ -76,6 +72,15 @@ public class GridPanel extends JPanel {
 					gameLogic.addTile();
 				}
 				repaint();
+				if (gameLogic.winner()) {
+					JOptionPane.showMessageDialog(null, "YOU WIN!", "2048", JOptionPane.PLAIN_MESSAGE, new ImageIcon(
+							"2048.png"));
+					newGame();
+				} else if (gameLogic.gameOver()) {
+					JOptionPane.showMessageDialog(null, "GAME OVER!", "2048", JOptionPane.PLAIN_MESSAGE, new ImageIcon(
+							"2048.png"));
+					newGame();
+				}
 			}
 		});
 	}
@@ -87,18 +92,15 @@ public class GridPanel extends JPanel {
 	}
 
 	private void drawTiles(Graphics g) {
-		scoreLabel.setText(String.valueOf("<html>SCORE<br>"
-				+ gameLogic.getScore() + "</html>"));
-		highScoreLabel.setText(String.valueOf("<html>HIGH SCORE<br>"
-				+ gameLogic.getHighScore() + "<html>"));
+		scoreLabel.setText(String.valueOf("<html>SCORE<br>" + gameLogic.getScore() + "</html>"));
+		highScoreLabel.setText(String.valueOf("<html>HIGH SCORE<br>" + gameLogic.getHighScore() + "<html>"));
 		for (int i = 0; i < labels.length; i++) {
 			for (int j = 0; j < labels[i].length; j++) {
 				labels[i][j].setBackground(tiles[i][j].getBackground());
 				labels[i][j].setForeground(tiles[i][j].getForeground());
 				labels[i][j].setBorder(BorderFactory.createCompoundBorder(
 						BorderFactory.createLineBorder(new Color(0xbbada0), 5),
-						BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
-								Color.WHITE, Color.WHITE)));
+						BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.WHITE, Color.WHITE)));
 				if (tiles[i][j].getValue() < 128) {
 					labels[i][j].setFont(largeFont);
 				} else if (tiles[i][j].getValue() < 1024) {
@@ -108,38 +110,15 @@ public class GridPanel extends JPanel {
 				}
 
 				if (tiles[i][j].getValue() != 0) {
-					labels[i][j]
-							.setText(String.valueOf(tiles[i][j].getValue()));
+					labels[i][j].setText(String.valueOf(tiles[i][j].getValue()));
 				} else {
 					labels[i][j].setText("");
-				}		
+				}
 			}
-		}
-		if (gameLogic.winner()) {
-			won = true;
-		}
-		
-		if (gameLogic.gameOver()) {
-			lost = true;
-		}
-		if (won) {
-			JOptionPane.showMessageDialog(this, "YOU WIN!", "2048",
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-		}
-		if (lost) {
-
-			JOptionPane.showMessageDialog(this, "GAME OVER!", "2048",
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-			
-		}
-		if (won || lost) {
-			newGame();
 		}
 	}
 
 	public void newGame() {
-		lost = false;
-		won = false;
 		gameLogic.newGame();
 		gameLogic.addTile();
 		gameLogic.addTile();
