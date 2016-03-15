@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
-
 public class GridPanel extends JPanel {
 
 	private final JLabel[][] labels;
@@ -22,9 +22,8 @@ public class GridPanel extends JPanel {
 	private final GameLogic gameLogic;
 	private final Font largeFont, mediumFont, smallFont;
 	private final JLabel scoreLabel, highScoreLabel;
-	private boolean won ;
+	private boolean won;
 	private boolean lost;
-	private int again ;
 
 	public GridPanel(GameLogic logic, final JLabel score, JLabel highScoreLabel) {
 
@@ -55,27 +54,27 @@ public class GridPanel extends JPanel {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
+				boolean moved = false;
 				switch (e.getKeyCode()) {
-
 				case KeyEvent.VK_LEFT:
-					gameLogic.moveLeft();
+					moved = gameLogic.moveLeft();
 					break;
 				case KeyEvent.VK_RIGHT:
-					gameLogic.moveRight();
+					moved = gameLogic.moveRight();
 					break;
 				case KeyEvent.VK_UP:
-					gameLogic.moveUp();
+					moved = gameLogic.moveUp();
 					break;
 				case KeyEvent.VK_DOWN:
-					gameLogic.moveDown();
+					moved = gameLogic.moveDown();
 					break;
 				case KeyEvent.VK_ESCAPE:
 					newGame();
 					return;
 				}
-
-				gameLogic.addTile();
-
+				if (moved) {
+					gameLogic.addTile();
+				}
 				repaint();
 			}
 		});
@@ -85,7 +84,6 @@ public class GridPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawTiles(g);
-
 	}
 
 	private void drawTiles(Graphics g) {
@@ -123,41 +121,30 @@ public class GridPanel extends JPanel {
 				}
 			}
 		}
-		if (won) {
-			 again = JOptionPane.showConfirmDialog(this, "                   " 
-					 +"YOU WIN \nWOULD YOU LIKE TO PLAY AGAIN?",
-					"2048", JOptionPane.YES_NO_OPTION,
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-
-			playAgain(g);
-		}
-		if (lost) {
-			 again = JOptionPane.showConfirmDialog(this, "                   "
-					+ "GAME OVER  \nWOULD YOU LIKE TO PLAY AGAIN?",
-					"2048", JOptionPane.YES_NO_OPTION,
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-		playAgain(g);
-	}
-	}
-
-	private void playAgain(Graphics g) {
-		if (again == JOptionPane.YES_OPTION) {
-			newGame();
 		
-			
-		} else {
+		if (won) {
 			JOptionPane.showMessageDialog(this,
-					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING",
+					"YOU WIN!",
 					"2048", JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("2048.png"));
-			System.exit(0);
-		
+				newGame();		
 		}
+		if (lost) {
+			
+			JOptionPane.showMessageDialog(this,
+					"GAME OVER!",
+					"2048", JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("2048.png"));
+			newGame();
+	}
+				
 	}
 
+
+
 	public void newGame() {
-		lost=false;
-		won=false;
+		lost = false;
+		won = false;
 		gameLogic.newGame();
 		gameLogic.addTile();
 		gameLogic.addTile();
