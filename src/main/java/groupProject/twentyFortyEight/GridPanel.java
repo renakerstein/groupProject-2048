@@ -10,10 +10,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
+
 
 public class GridPanel extends JPanel {
 
@@ -22,11 +25,16 @@ public class GridPanel extends JPanel {
 	private final GameLogic gameLogic;
 	private final Font largeFont, mediumFont, smallFont;
 	private final JLabel scoreLabel, highScoreLabel;
+	private boolean won ;
+	private boolean lost;
+	private int again ;
 
 	public GridPanel(GameLogic logic, final JLabel score, JLabel highScoreLabel) {
 
 		this.scoreLabel = score;
 		this.highScoreLabel = highScoreLabel;
+		this.won = false;
+		this.lost = false;
 
 		largeFont = new Font("Calibri", Font.PLAIN, 100);
 		mediumFont = new Font("Calibri", Font.PLAIN, 80);
@@ -79,12 +87,15 @@ public class GridPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		drawTiles(g);
+
+	}
+
+	private void drawTiles(Graphics g) {
 		scoreLabel.setText(String.valueOf("<html>SCORE<br>"
 				+ gameLogic.getScore() + "</html>"));
 		highScoreLabel.setText(String.valueOf("<html>HIGH SCORE<br>"
 				+ gameLogic.getHighScore() + "<html>"));
-		boolean won = false;
-		boolean lost = false;
 		for (int i = 0; i < labels.length; i++) {
 			for (int j = 0; j < labels[i].length; j++) {
 				labels[i][j].setBackground(tiles[i][j].getBackground());
@@ -116,67 +127,42 @@ public class GridPanel extends JPanel {
 			}
 		}
 		if (won) {
-			endGameMsg(g);
-			/*
-			 * JOptionPane.showMessageDialog(this,
-			 * "You won-HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
-			 * gameLogic.newGame(); newGame(); repaint();*
-			 */
-			g.fillRect(0, 0, getWidth(), getHeight());
-			repaint();
-		}
+			 again = JOptionPane.showConfirmDialog(this, "                 YOU WIN \nWOULD YOU LIKE TO PLAY AGAIN?",
+					"2048", JOptionPane.YES_NO_OPTION,
+					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
 
+			playAgain();
+		}
 		if (lost) {
+			again = JOptionPane.showConfirmDialog(this, "                   "
+					+ "GAME OVER  \nWOULD YOU LIKE TO PLAY AGAIN?",
+					"2048", JOptionPane.YES_NO_OPTION,
+					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
 
-			g.setColor(new Color(255, 255, 255, 30));
-			g.fillRect(0, 0, 700, 700);
-			g.setColor(new Color(78, 139, 202));
-			g.setFont(new Font("Calibri", Font.BOLD, 48));
+			playAgain();
+		
+	}
+	}
 
-			g.drawString("You won!", 68, 150);
+	private void playAgain() {
+		if (again == JOptionPane.YES_OPTION) {
+			newGame();
 
-			// fillRect(0, 0, getWidth(), getHeight());
-			// JOptionPane.showMessageDialog(this,
-			// "HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
-			// JOptionPane.showMessageDialog(this,
-			// "You lost-HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING");
-			gameLogic.newGame();
-			// newGame();
-			// repaint();
+		} else {
+			JOptionPane.showMessageDialog(this,
+					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING",
+					"2048", JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("2048.png"));
+			System.exit(0);
+		
 		}
-
 	}
 
-	public void endGameMsg(Graphics g2) {
-		Graphics2D g = (Graphics2D) g2;
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
-				RenderingHints.VALUE_STROKE_NORMALIZE);
-		g.setColor(new Color(255, 255, 255, 30));
-		g.fillRect(0, 0, getWidth(), getHeight());
-		g.setColor(new Color(78, 139, 202));
-		g.setFont(new Font("Arial", Font.BOLD, 48));
 
-		g.drawString("You won!", 68, 150);
-
-		/*
-		 * if (myLose) { g.drawString("Game over!", 50, 130);
-		 * g.drawString("You lose!", 64, 200); }
-		 * 
-		 * g.setFont(new Font(FONT_NAME, Font.PLAIN, 16)); g.setColor(new
-		 * Color(128, 128, 128, 128)); g.drawString("Press ESC to play again",
-		 * 80, getHeight() - 40);
-		 * 
-		 * } g.setFont(new Font(FONT_NAME, Font.PLAIN, 18));
-		 * g.drawString("Score: " + myScore, 200, 365);
-		 * 
-		 * }*
-		 */
-
-	}
 
 	public void newGame() {
+		lost=false;
+		won=false;
 		gameLogic.newGame();
 		gameLogic.addTile();
 		gameLogic.addTile();
