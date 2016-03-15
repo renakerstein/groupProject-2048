@@ -84,7 +84,6 @@ public class GridPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawTiles(g);
-
 	}
 
 	private void drawTiles(Graphics g) {
@@ -128,29 +127,44 @@ public class GridPanel extends JPanel {
 					"                 YOU WIN \nWOULD YOU LIKE TO PLAY AGAIN?",
 					"2048", JOptionPane.YES_NO_OPTION,
 					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-			playAgain(again);
+			playAgain(again, g);
 		}
 		if (lost) {
 			again = JOptionPane.showConfirmDialog(this, "                   "
 					+ "GAME OVER  \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
 					JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("2048.png"));
-			playAgain(again);
+			playAgain(again, g);
 		}
 	}
 
-	private void playAgain(int again) {
+	private void playAgain(int again, Graphics g) {
 		if (again == JOptionPane.YES_OPTION) {
 			newGame();
-		} else {
-			JOptionPane.showMessageDialog(this,
-					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING", "2048",
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-			System.exit(0);
+			again = JOptionPane.showConfirmDialog(this, "                   "
+					+ "YOU WIN \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
+					JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("2048.png"));
+
+			// playAgain(g);
 		}
-		repaint();
+		if (lost) {
+			again = JOptionPane.showConfirmDialog(this, "                   "
+					+ "GAME OVER  \nWOULD YOU LIKE TO PLAY AGAIN?", "2048",
+					JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("2048.png"));
+			// playAgain(g);
+
+		}
 	}
 
+	/**
+	 * private void playAgain(Graphics g) { if (again == JOptionPane.YES_OPTION)
+	 * { newGame(); } else { JOptionPane.showMessageDialog(this,
+	 * "HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING", "2048",
+	 * JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png")); System.exit(0); }
+	 * repaint(); }
+	 */
 	public void newGame() {
 		lost = false;
 		won = false;
