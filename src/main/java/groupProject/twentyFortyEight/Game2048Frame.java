@@ -89,7 +89,7 @@ public class Game2048Frame extends JFrame {
 				JOptionPane
 						.showMessageDialog(
 								getContentPane(),
-								"Use your arrow keys to move the tiles. \nWhen two tiles with the same number touch, they merge into one!\nTo win, get to 2048!",
+								"Use your arrow keys to move the tiles. \nWhen two tiles with the same number touch, they merge into one!\nTo win, get to 2048!\n\nPress ESC at any time to start a new game!",
 								"HOW TO PLAY", JOptionPane.PLAIN_MESSAGE);
 			}
 
