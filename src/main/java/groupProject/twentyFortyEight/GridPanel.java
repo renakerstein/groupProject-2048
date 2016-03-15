@@ -121,25 +121,21 @@ public class GridPanel extends JPanel {
 				}
 			}
 		}
-		
 		if (won) {
-			JOptionPane.showMessageDialog(this,
-					"YOU WIN!",
-					"2048", JOptionPane.PLAIN_MESSAGE,
-					new ImageIcon("2048.png"));
-				newGame();		
+			JOptionPane.showMessageDialog(this, "YOU WIN!", "2048",
+					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
+			newGame();
 		}
 		if (lost) {
-			
-			JOptionPane.showMessageDialog(this,
-					"GAME OVER!",
-					"2048", JOptionPane.PLAIN_MESSAGE,new ImageIcon("2048.png"));
+
+			JOptionPane.showMessageDialog(this, "GAME OVER!", "2048",
+					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
 			newGame();
-
+		}
+		if (won || lost) {
+			newGame();
+		}
 	}
-	}
-				
-
 
 	public void newGame() {
 		lost = false;

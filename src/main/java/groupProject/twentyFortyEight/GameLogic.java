@@ -44,7 +44,6 @@ public class GameLogic {
 			chosenSlot = availableSlots.get(index);
 			chosenSlot.setValue(Math.random() < 0.9 ? 2 : 4);
 		}
-
 	}
 
 	public boolean moveLeft() {
@@ -56,7 +55,6 @@ public class GameLogic {
 				list.add(gameTiles[row][column]);
 				list2.add(gameTiles[row][column]);
 			}
-
 			list = mergeLine(list);
 
 			while (list.size() != 4) {
@@ -84,6 +82,7 @@ public class GameLogic {
 				list2.add(gameTiles[row][column]);
 			}
 			list = mergeLine(list);
+
 			while (list.size() != 4) {
 				list.addFirst(new Tile());
 			}
@@ -108,7 +107,6 @@ public class GameLogic {
 				list.add(gameTiles[column][row]);
 				list2.add(gameTiles[column][row]);
 			}
-
 			list = mergeLine(list);
 
 			while (list.size() != 4) {
