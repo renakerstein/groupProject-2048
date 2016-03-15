@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,7 +37,7 @@ public class Game2048Frame extends JFrame {
 
 		gridPanel = new GridPanel(gameLogic, scoreLabel, highScoreLabel);
 		add(gridPanel, BorderLayout.CENTER);
-
+	
 		Container container = new Container();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.setBackground(Color.WHITE);

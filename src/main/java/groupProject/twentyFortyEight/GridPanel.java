@@ -3,12 +3,9 @@ package groupProject.twentyFortyEight;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.RenderingHints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -127,27 +124,29 @@ public class GridPanel extends JPanel {
 			}
 		}
 		if (won) {
-			 again = JOptionPane.showConfirmDialog(this, "                 YOU WIN \nWOULD YOU LIKE TO PLAY AGAIN?",
+			 again = JOptionPane.showConfirmDialog(this, "                   " 
+					 +"YOU WIN \nWOULD YOU LIKE TO PLAY AGAIN?",
 					"2048", JOptionPane.YES_NO_OPTION,
 					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
 
-			playAgain();
+			playAgain(g);
 		}
 		if (lost) {
-			again = JOptionPane.showConfirmDialog(this, "                   "
+			 again = JOptionPane.showConfirmDialog(this, "                   "
 					+ "GAME OVER  \nWOULD YOU LIKE TO PLAY AGAIN?",
 					"2048", JOptionPane.YES_NO_OPTION,
 					JOptionPane.PLAIN_MESSAGE, new ImageIcon("2048.png"));
-
-			playAgain();
+		playAgain(g);
+	
 		
 	}
 	}
 
-	private void playAgain() {
+	private void playAgain(Graphics g) {
 		if (again == JOptionPane.YES_OPTION) {
 			newGame();
-
+		
+			
 		} else {
 			JOptionPane.showMessageDialog(this,
 					"HAVE A GOOD DAY! \nTHANK YOU FOR PLAYING",
